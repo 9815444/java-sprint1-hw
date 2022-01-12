@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class YearlyReport {
     int year;
     int month;
@@ -11,4 +13,8 @@ public class YearlyReport {
         amount = amountValue;
         is_expense = is_expenseValue;
     }
+
+
+
+
 }
