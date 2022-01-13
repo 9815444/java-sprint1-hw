@@ -9,9 +9,10 @@ public class Main {
         YearlyReports yearlyReports = new YearlyReports();
 
         printMenu();
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            Scanner scanner = new Scanner(System.in);
+
             int userInput = scanner.nextInt();
             if (userInput == 1) {
                 monthlyReports.read();

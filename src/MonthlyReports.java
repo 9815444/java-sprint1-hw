@@ -4,19 +4,19 @@ import java.util.HashMap;
 public class MonthlyReports {
 
     HashMap<Integer, ArrayList<MonthlyReport>> data = new HashMap<>();
-    boolean reportsRead;
+    boolean isRead;
 
     public MonthlyReports() {
         ArrayList<MonthlyReport> reports = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
-            this.data.put(i, reports);
+            data.put(i, reports);
         }
-        this.reportsRead = false;
+        isRead = false;
     }
 
     public void read() {
 
-        String directory = "Reports/";
+        String directory = "reports/";
         Integer noYear = 2021;
 
         for (int i = 1; i <= 3; i++) {
@@ -48,15 +48,15 @@ public class MonthlyReports {
                     dataOneMonth.add(dataMonth);
                 }
             }
-            this.data.put(i, dataOneMonth);
+            data.put(i, dataOneMonth);
         }
-        this.reportsRead = true;
+        isRead = true;
         System.out.println("Cчитанны месячные отчеты!");
     }
 
     public static void print(MonthlyReports monthlyReports) {
 
-        if (!monthlyReports.reportsRead) {
+        if (!monthlyReports.isRead) {
             System.out.println("Не считанны месячные отчеты!");
             return;
         }

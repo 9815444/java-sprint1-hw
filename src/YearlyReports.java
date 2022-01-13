@@ -3,21 +3,21 @@ import java.util.HashMap;
 
 public class YearlyReports {
     ArrayList<YearlyReport> data = new ArrayList<>();
-    boolean ReportsRead = false;
+    boolean isRead = false;
 
     public void read() {
 
-        String directory = "Reports/";
+        String directory = "reports/";
         Integer noYear = 2021;
 
         String fileName = directory + "y." + noYear + ".csv";
-        String Text = Parsing.readFileContentsOrNull(fileName);
-        String[] lines = Text.split("\n");
+        String text = Parsing.readFileContentsOrNull(fileName);
+        String[] lines = text.split("\n");
 
-        boolean isOneString = true;
+        boolean isFirstString = true;
         for (String line : lines) {
-            if (isOneString) {
-                isOneString = false;
+            if (isFirstString) {
+                isFirstString = false;
             } else {
                 String[] lineContents = line.split(",");
                 int yearValue = noYear;
@@ -26,10 +26,10 @@ public class YearlyReports {
                 Boolean is_expenseValue = Boolean.parseBoolean(lineContents[2].replace("\r", ""));
 
                 YearlyReport dataYear = new YearlyReport(yearValue, monthValue, amountValue, is_expenseValue);
-                this.data.add(dataYear);
+                data.add(dataYear);
             }
         }
-        this.ReportsRead = true;
+        isRead = true;
         System.out.println("Cчитан годовой отчет!");
 
     }
@@ -39,11 +39,11 @@ public class YearlyReports {
         boolean reportRead = true;
         boolean mistake = false;
 
-        if (!monthlyReports.reportsRead) {
+        if (!monthlyReports.isRead) {
             System.out.println("Не считанны месячные отчеты!");
             reportRead = false;
         }
-        if (!yearlyReports.ReportsRead) {
+        if (!yearlyReports.isRead) {
             System.out.println("Не считанн годовой отчет!");
             reportRead = false;
         }
@@ -101,24 +101,24 @@ public class YearlyReports {
 
         for (YearlyReport recordYear : yearlyReports.data) {
 
-            Double Sum = profit.get(recordYear.month);
+            Double sum = profit.get(recordYear.month);
 
             if (recordYear.is_expense) {
-                Sum -= recordYear.amount;
+                sum -= recordYear.amount;
                 sumExpenses += recordYear.amount;
                 qExpenses++;
             } else {
-                Sum += recordYear.amount;
+                sum += recordYear.amount;
                 sumIncome += recordYear.amount;
                 qIncome++;
             }
-            profit.put(recordYear.month, Sum);
+            profit.put(recordYear.month, sum);
 
         }
 
         System.out.println("2021 год. Прибыль:");
-        for (Integer mouth : profit.keySet()) {
-            System.out.println(mouth + " месяц - " + profit.get(mouth));
+        for (Integer month : profit.keySet()) {
+            System.out.println(month + " месяц - " + profit.get(month));
         }
 
         System.out.println("Средний расход за месяц - " + (qExpenses == 0 ? 0 : sumExpenses / qExpenses));
