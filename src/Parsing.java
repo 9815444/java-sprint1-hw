@@ -4,8 +4,7 @@ import java.nio.file.Path;
 
 public class Parsing {
 
-    public static String readFileContentsOrNull(String path)
-    {
+    public static String readFileContentsOrNull(String path) {
         try {
             return Files.readString(Path.of(path));
         } catch (IOException e) {

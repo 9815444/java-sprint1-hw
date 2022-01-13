@@ -12,7 +12,7 @@ public class YearlyReports {
 
         String fileName = directory + "y." + noYear + ".csv";
         String Text = Parsing.readFileContentsOrNull(fileName);
-        String[] lines = Text.split("\r\n");
+        String[] lines = Text.split("\n");
 
         boolean isOneString = true;
         for (String line : lines) {
@@ -23,23 +23,23 @@ public class YearlyReports {
                 int yearValue = noYear;
                 int monthValue = Integer.parseInt(lineContents[0]);
                 Double amountValue = Double.parseDouble(lineContents[1]);
-                Boolean is_expenseValue = Boolean.parseBoolean(lineContents[2]);
+                Boolean is_expenseValue = Boolean.parseBoolean(lineContents[2].replace("\r", ""));
 
-                YearlyReport dataYear = new YearlyReport(yearValue, monthValue, amountValue,  is_expenseValue);
+                YearlyReport dataYear = new YearlyReport(yearValue, monthValue, amountValue, is_expenseValue);
                 this.data.add(dataYear);
             }
         }
         this.ReportsRead = true;
-        System.out.println("Cчитанн годовой отчет!");
+        System.out.println("Cчитан годовой отчет!");
 
     }
 
-    public static void compareReports(MonthlyReports monthlyReports, YearlyReports yearlyReports){
+    public static void compareReports(MonthlyReports monthlyReports, YearlyReports yearlyReports) {
 
         boolean reportRead = true;
         boolean mistake = false;
 
-        if (!monthlyReports.ReportsRead) {
+        if (!monthlyReports.reportsRead) {
             System.out.println("Не считанны месячные отчеты!");
             reportRead = false;
         }
@@ -52,7 +52,7 @@ public class YearlyReports {
             return;
         }
 
-        for (int i = 1; i<=3; i++) {
+        for (int i = 1; i <= 3; i++) {
             Double sumExpense = 0.0;
             Double sumIncome = 0.0;
 
@@ -60,19 +60,18 @@ public class YearlyReports {
             for (MonthlyReport record : dataOneMonth) {
                 if (record.is_expense) {
                     sumExpense += record.sum;
-                }
-                else {
+                } else {
                     sumIncome += record.sum;
                 }
             }
 
             for (YearlyReport recordYear : yearlyReports.data) {
                 if (recordYear.month == i) {
-                    if ((!recordYear.is_expense) && (recordYear.amount !=  sumIncome)) {
+                    if ((!recordYear.is_expense) && (recordYear.amount != sumIncome)) {
                         System.out.println("Не совпадает значение дохода за " + i + " месяц 2021 г.");
                         mistake = true;
                     }
-                    if ((recordYear.is_expense) && (recordYear.amount !=  sumExpense)) {
+                    if ((recordYear.is_expense) && (recordYear.amount != sumExpense)) {
                         System.out.println("Не совпадает значение расхода за " + i + " месяц 2021 г.");
                         mistake = true;
                     }
@@ -86,7 +85,7 @@ public class YearlyReports {
 
     }
 
-    public static void print(YearlyReports yearlyReports){
+    public static void print(YearlyReports yearlyReports) {
 
         HashMap<Integer, Double> profit = new HashMap<>();
 
@@ -96,7 +95,7 @@ public class YearlyReports {
         Double sumIncome = 0.0;
         Integer qIncome = 0;
 
-        for (int i = 1; i<=3; i++) {
+        for (int i = 1; i <= 3; i++) {
             profit.put(i, 0.0);
         }
 
@@ -107,12 +106,11 @@ public class YearlyReports {
             if (recordYear.is_expense) {
                 Sum -= recordYear.amount;
                 sumExpenses += recordYear.amount;
-                qExpenses ++;
-            }
-            else {
+                qExpenses++;
+            } else {
                 Sum += recordYear.amount;
                 sumIncome += recordYear.amount;
-                qIncome ++;
+                qIncome++;
             }
             profit.put(recordYear.month, Sum);
 

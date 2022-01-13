@@ -4,46 +4,45 @@ import java.util.HashMap;
 public class MonthlyReports {
 
     HashMap<Integer, ArrayList<MonthlyReport>> data = new HashMap<>();
-    boolean ReportsRead;
+    boolean reportsRead;
 
     public MonthlyReports() {
         ArrayList<MonthlyReport> reports = new ArrayList<>();
-        for (int i=1;i<=3;i++){
+        for (int i = 1; i <= 3; i++) {
             this.data.put(i, reports);
         }
-        this.ReportsRead = false;
+        this.reportsRead = false;
     }
 
     public void read() {
 
         String directory = "Reports/";
-        HashMap<Integer, ArrayList<MonthlyReport>> dataMonths = new HashMap<>();
         Integer noYear = 2021;
 
-        for (int i = 1; i<=3; i++) {
+        for (int i = 1; i <= 3; i++) {
 
             ArrayList<MonthlyReport> dataOneMonth = new ArrayList<>();
 
             String fileName = directory + "m.20210" + i + ".csv";
 
-            String Text = Parsing.readFileContentsOrNull(fileName);
+            String text = Parsing.readFileContentsOrNull(fileName);
 
-            if (Text == null) {
+            if (text == null) {
                 continue;
             }
 
-            String[] lines = Text.split("\n");
+            String[] lines = text.split("\n");
 
-            boolean isOneString = true;
+            boolean isFirstString = true;
             for (String line : lines) {
-                if (isOneString) {
-                    isOneString = false;
+                if (isFirstString) {
+                    isFirstString = false;
                 } else {
                     String[] lineContents = line.split(",");
                     String item_nameValue = lineContents[0];
                     Boolean is_expenseValue = Boolean.parseBoolean(lineContents[1]);
                     Double quantityValue = Double.parseDouble(lineContents[2]);
-                    Double sum_of_oneValue = Double.parseDouble(lineContents[3]);
+                    Double sum_of_oneValue = Double.parseDouble(lineContents[3].replace("\r", ""));
 
                     MonthlyReport dataMonth = new MonthlyReport(noYear, i, item_nameValue, is_expenseValue, quantityValue, sum_of_oneValue);
                     dataOneMonth.add(dataMonth);
@@ -51,20 +50,18 @@ public class MonthlyReports {
             }
             this.data.put(i, dataOneMonth);
         }
-        this.ReportsRead = true;
+        this.reportsRead = true;
         System.out.println("Cчитанны месячные отчеты!");
     }
 
-    public static void print(MonthlyReports monthlyReports){
+    public static void print(MonthlyReports monthlyReports) {
 
-        if (!monthlyReports.ReportsRead) {
+        if (!monthlyReports.reportsRead) {
             System.out.println("Не считанны месячные отчеты!");
             return;
         }
 
-        boolean mistake = false;
-
-        for (int i = 1; i<=3; i++) {
+        for (int i = 1; i <= 3; i++) {
             Double maxSumExpense = 0.0;
             String maxSumExpenseItem = "";
             Double maxSumIncome = 0.0;

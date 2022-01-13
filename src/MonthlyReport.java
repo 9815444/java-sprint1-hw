@@ -7,7 +7,7 @@ public class MonthlyReport {
     double sum_of_one;
     double sum;
 
-    MonthlyReport(int yearValue, int monthValue, String item_nameValue, Boolean is_expenseValue, Double quantityValue, Double sum_of_oneValue){
+    MonthlyReport(int yearValue, int monthValue, String item_nameValue, Boolean is_expenseValue, Double quantityValue, Double sum_of_oneValue) {
         year = yearValue;
         month = monthValue;
         item_name = item_nameValue;
@@ -16,7 +16,6 @@ public class MonthlyReport {
         sum_of_one = sum_of_oneValue;
         sum = quantityValue * sum_of_oneValue;
     }
-
 
 
 }

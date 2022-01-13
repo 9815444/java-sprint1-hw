@@ -1,10 +1,3 @@
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -36,7 +29,7 @@ public class Main {
                 System.out.println("Неверный ввод!");
         }
 
-}
+    }
 
     static void printMenu() {
         System.out.println("Главное меню:");
